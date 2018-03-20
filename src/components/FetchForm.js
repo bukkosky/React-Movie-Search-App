@@ -6,7 +6,6 @@ class FetchForm extends Component {
   submit = (e) => {
     e.preventDefault();
     this.props.onSubmit(this.input.value)
-    console.log('ok')
   }
 
   render() {

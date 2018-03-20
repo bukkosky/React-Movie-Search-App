@@ -26,16 +26,18 @@ class App extends Component {
 	// 	})
 	// }
 
-	// filterData = (dataToFilter) => {
-	// 	const { fetchedItems } = this.state
-	// 	const filteredData = fetchedItems.filter(item => {
-	// 		return item.name.toLowerCase()
-	// 					 .indexOf(dataToFilter.toLowerCase()) !== -1
-	// 	})
-	// 	this.setState({
-	// 		filteredData
-	// 	})
-	// }
+	filterData = (dataToFilter) => {
+		const { fetchedItems } = this.state
+
+		const filterData = fetchedItems.filter(item => {
+			return item.name.toLowerCase()
+						 .indexOf(dataToFilter.toLowerCase()) !== -1
+		})
+		console.log(filterData)
+		this.setState({
+			filterData
+		})
+	}
 
 	fetchData = (fetchItems) => {
 		fetch(url)
@@ -43,7 +45,8 @@ class App extends Component {
 		.then(Object.values)
 		.then(fetchedItems => {
 			this.setState({
-				fetchedItems
+				fetchedItems,
+				filterData: fetchedItems
 			})
 			console.log(fetchedItems)
 		})
@@ -51,18 +54,19 @@ class App extends Component {
 
   render() {
 		const { fetchedItems } = this.state
+		const { filterData } = this.state
     return (
       <div className="App">
         <FetchForm onSubmit={this.fetchData}/>
 
-		<FilterItems onSubmit={this.filterData} />
+		{filterData.length > 0 && <FilterItems onSubmit={this.filterData} /> }
 
 			<div>
-				{fetchedItems.map(({thumbnail, name, rating}) => (
-					<ItemsList 
-							   thumbnail={thumbnail}
+				{filterData.map(({thumbnail, name, rating, index}) => (
+					<ItemsList thumbnail={thumbnail}
 							   name={name}
-							   rating={rating}/>  
+							   rating={rating}
+							   key={filterData.index} />  
 				))}
 			</div>	
       </div>
