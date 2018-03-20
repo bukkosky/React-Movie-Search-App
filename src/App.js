@@ -14,29 +14,28 @@ class App extends Component {
 
 	state = {
 		fetchedItems: [],
-		filteredData: [],
-		dataToFilter: ""
+		filterData: []
 	}
 
 
-	changeFilterInput = (e) => {
-		this.setState({
-			dataToFilter: e.target.value
-		}, () => {
-			this.filterData(this.state.dataToFilter)
-		})
-	}
+	// changeFilterInput = (e) => {
+	// 	this.setState({
+	// 		dataToFilter: e.target.value
+	// 	}, () => {
+	// 		this.filterData(this.state.dataToFilter)
+	// 	})
+	// }
 
-	filterData = (dataToFilter) => {
-		const { fetchedItems } = this.state
-		const filteredData = fetchedItems.filter(item => {
-			return item.name.toLowerCase()
-						 .indexOf(dataToFilter.toLowerCase()) !== -1
-		})
-		this.setState({
-			filteredData
-		})
-	}
+	// filterData = (dataToFilter) => {
+	// 	const { fetchedItems } = this.state
+	// 	const filteredData = fetchedItems.filter(item => {
+	// 		return item.name.toLowerCase()
+	// 					 .indexOf(dataToFilter.toLowerCase()) !== -1
+	// 	})
+	// 	this.setState({
+	// 		filteredData
+	// 	})
+	// }
 
 	fetchData = (fetchItems) => {
 		fetch(url)
@@ -51,21 +50,21 @@ class App extends Component {
 }
 
   render() {
-		const { filteredData } = this.state
+		const { fetchedItems } = this.state
     return (
       <div className="App">
         <FetchForm onSubmit={this.fetchData}/>
 
-		  	<FilterItems onChangeDataFilter={this.changeFilterInput} filterInputValue={this.state.dataToFilter} />
+		<FilterItems onSubmit={this.filterData} />
 
-				<div>
-				{filteredData.map(({thumbnail, name, rating}) => (
-					<ItemsList thumbnail={thumbnail}
-				   				 name={name}
-				   				 rating={rating}/>  
+			<div>
+				{fetchedItems.map(({thumbnail, name, rating}) => (
+					<ItemsList 
+							   thumbnail={thumbnail}
+							   name={name}
+							   rating={rating}/>  
 				))}
-				</div>
-         		
+			</div>	
       </div>
 		);
 	}

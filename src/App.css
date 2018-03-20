@@ -34,3 +34,8 @@ form {
 form input {
   padding: 10px;
 }
+
+div img {
+  width: 200px;
+  height: 300px;
+}
