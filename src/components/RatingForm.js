@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
+import { ratingNames, getStats } from'../utils';
 import '../App.css';
+
 
 class RatingForm extends Component {
     render() {
-        const ratingNames = [
-            'Not rated yet',
-            'very poor',
-            'poor',
-            'avg',
-            'good',
-            'very good',
-        ];
+        const stats = getStats(this.props.data)
+      //  console.log(stats)
         return(
-            <div>{ratingNames[this.props.rating]}</div>
+            <div>{ratingNames.map(item => (
+                <div key={item}>{item}: {stats[item] || 0}</div>
+            ))}</div>
         )
     }
 }

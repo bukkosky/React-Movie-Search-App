@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
+import Stars from './Stars';
 import '../App.css';
-import RatingForm from './RatingForm';
-
 
 class ItemsList extends Component {
   render() {
@@ -14,8 +13,7 @@ class ItemsList extends Component {
           }
         </div>
         <div><h4>Tytuł: {name}</h4></div>
-        <div><h4>Rating: {rating}</h4></div>
-        <RatingForm rating={rating} />
+        <div><Stars rating={rating} /></div>
       </div>
     )
   }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import FetchForm from './components/FetchForm.js'
 import ItemsList from './components/ItemsList'
 import FilterItems from "./components/FilterItems"
+import RatingForm from "./components/RatingForm"
 import './App.css';
 
 
@@ -18,13 +19,13 @@ class App extends Component {
 	}
 
 
-	// changeFilterInput = (e) => {
-	// 	this.setState({
-	// 		dataToFilter: e.target.value
-	// 	}, () => {
-	// 		this.filterData(this.state.dataToFilter)
-	// 	})
-	// }
+	changeFilterInput = (e) => {
+		this.setState({
+			dataToFilter: e.target.value
+		}, () => {
+			this.filterData(this.state.dataToFilter)
+		})
+	}
 
 	filterData = (dataToFilter) => {
 		const { fetchedItems } = this.state
@@ -33,7 +34,7 @@ class App extends Component {
 			return item.name.toLowerCase()
 						 .indexOf(dataToFilter.toLowerCase()) !== -1
 		})
-		console.log(filterData)
+	//	console.log(filterData)
 		this.setState({
 			filterData
 		})
@@ -48,18 +49,17 @@ class App extends Component {
 				fetchedItems,
 				filterData: fetchedItems
 			})
-			console.log(fetchedItems)
+		//	console.log(fetchedItems)
 		})
 }
 
   render() {
-		const { fetchedItems } = this.state
 		const { filterData } = this.state
     return (
       <div className="App">
         <FetchForm onSubmit={this.fetchData}/>
-
-		{filterData.length > 0 && <FilterItems onSubmit={this.filterData} /> }
+		{this.state.fetchedItems.length > 0 
+			&& <FilterItems onChangeFilterInput={this.changeFilterInput} filterInputValue={this.state.dataToFilter} /> }
 
 			<div>
 				{filterData.map(({thumbnail, name, rating, index}) => (
@@ -69,6 +69,7 @@ class App extends Component {
 							   key={filterData.index} />  
 				))}
 			</div>	
+			{this.state.fetchedItems.length > 0 && <RatingForm data={filterData} /> }
       </div>
 		);
 	}
